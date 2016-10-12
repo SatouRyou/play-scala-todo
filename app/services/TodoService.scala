@@ -21,6 +21,7 @@ class TodoService @Inject() (dbapi: DBApi) {
     }
   }
 
+  // TODO全件取得
   def list(): Seq[Todo] = {
     db.withConnection { implicit connection =>
       SQL(
@@ -31,6 +32,7 @@ class TodoService @Inject() (dbapi: DBApi) {
     }
   }
 
+  // TODO新規登録
   def insert(todo: Todo) = {
     db.withConnection { implicit connection =>
       SQL(
@@ -39,6 +41,46 @@ class TodoService @Inject() (dbapi: DBApi) {
         """
       ).on(
         'name -> todo.name
+      ).executeUpdate()
+    }
+  }
+
+  // TODO一件取得
+  def findById(id: Long): Todo = {
+    db.withConnection { implicit connection =>
+      SQL(
+        """
+          select * from todo where id = {id}
+        """
+      ).on(
+        'id -> id
+      ).as(simple.single)
+    }
+  }
+
+  // TODO更新
+  def update(todo: Todo) = {
+    db.withConnection { implicit connection =>
+      SQL(
+        """
+          update todo set name = {name} where id = {id}
+        """
+      ).on(
+        'name -> todo.name,
+        'id -> todo.id
+      ).executeUpdate()
+    }
+  }
+
+  // TODO削除
+  def delete(todo: Todo) = {
+    db.withConnection { implicit connection =>
+      SQL(
+        """
+          delete from todo where id = {id}
+        """
+      ).on(
+        'id -> todo.id
       ).executeUpdate()
     }
   }
