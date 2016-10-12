@@ -6,7 +6,13 @@ lazy val `playscalacrud` = (project in file(".")).enablePlugins(PlayScala)
 
 scalaVersion := "2.11.7"
 
-libraryDependencies ++= Seq( jdbc , cache , ws   , specs2 % Test )
+libraryDependencies ++= Seq(
+  "com.typesafe.play" %% "anorm" % "2.5.0",
+  evolutions,
+  jdbc,
+  cache,
+  ws,
+  specs2 % Test )
 
 unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )  
 
