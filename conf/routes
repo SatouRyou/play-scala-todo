@@ -6,5 +6,6 @@
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 GET     /todo/helloworld            controllers.TodoController.helloworld()
+GET     /todo/list                  controllers.TodoController.list()
 
     
